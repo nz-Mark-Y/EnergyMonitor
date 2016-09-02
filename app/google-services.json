@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "108531408647",
+    "firebase_url": "https://electeng209-520f4.firebaseio.com",
+    "project_id": "electeng209-520f4",
+    "storage_bucket": "electeng209-520f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108531408647:android:6405da25d8833e1a",
+        "android_client_info": {
+          "package_name": "electeng209.energymonitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108531408647-7bmnbn0bcjkqa6524ht3m4772r5v2uu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ6CthXLJFSfncAU7X95BQ9GLVxzJxgjU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
