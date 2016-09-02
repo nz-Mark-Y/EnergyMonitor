@@ -12,16 +12,17 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView dataDisplay = (TextView)findViewById(R.id.textView);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final TextView dataDisplay = (TextView)findViewById(R.id.textView);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, World!");
+        DatabaseReference myRef = database.getReference("data");
+
+        //myRef.setValue("Hello, World!");
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -36,10 +37,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                dataDisplay.setText("Failed to read value." + error.toException());
+                dataDisplay.setText("Error: " + error.toException());
             }
         });
     }
-
-
 }
