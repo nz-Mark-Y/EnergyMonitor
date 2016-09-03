@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
 
-        //myRef.setValue("Hello, World!");
-
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -43,19 +41,6 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<MyData> dataArrayList = new ArrayList<>();
                     int number;
                     int value;
-                    /*
-                    try {
-                        JSONObject obj = new JSONObject(dataArray[dataArray.length-1]);
-                        number = obj.getInt("number");
-                        value = obj.getInt("value");
-                    }  catch(JSONException e) {
-                        number = 0;
-                        value = 0;
-                        dataDisplay.setText(e.getMessage());
-                    }
-                    dataDisplay.setText("Number is:" + number + "Value is: " + value);
-                    */
-
                     for (int i=0;i<dataArray.length;i++) {
                         try {
                             JSONObject obj = new JSONObject(dataArray[i]);
@@ -67,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                             dataDisplay.setText(e.getMessage());
                         }
                         MyData myData = new MyData(number, value);
-                        Log.d("MyData: " + String.valueOf(myData.number), String.valueOf(myData.value));
                         dataArrayList.add(myData);
                     }
                     dataArrayList = sortArray(dataArrayList);
