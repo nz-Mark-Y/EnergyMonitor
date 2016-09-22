@@ -40,12 +40,14 @@ public class MainActivity extends AppCompatActivity {
                     String[] dataArray = myMap.values().toArray(new String[0]);
                     ArrayList<MyData> dataArrayList = new ArrayList<>();
                     int number;
-                    int value;
+                    float value;
+                    String valueString;
                     for (int i=0;i<dataArray.length;i++) {
                         try {
                             JSONObject obj = new JSONObject(dataArray[i]);
                             number = obj.getInt("number");
-                            value = obj.getInt("value");
+                            valueString = obj.getString("value");
+                            value = Float.parseFloat(valueString);
                         }  catch(JSONException e) {
                             number = 0;
                             value = 0;
@@ -55,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
                         dataArrayList.add(myData);
                     }
                     dataArrayList = sortArray(dataArrayList);
+                    // ||=========================================================================||
+                    // ||At this stage, the last MyData in the array is the most recent data value||
+                    // ||So display code goes here.                                               ||
+                    // ||Right now it just displays the most recent MyData in a textView          ||
+                    // ||Feel free to add helper functions and other classes                      ||
+                    // ||=========================================================================||
                     dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + "Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
                 }
             }
@@ -78,4 +86,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return inputList;
     }
+
 }

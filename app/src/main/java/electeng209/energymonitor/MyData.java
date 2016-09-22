@@ -5,9 +5,9 @@ package electeng209.energymonitor;
  */
 public class MyData {
     public int number;
-    public int value;
+    public float value;
 
-    public MyData(int number, int value) {
+    public MyData(int number, float value) {
         this.number = number;
         this.value = value;
     }
