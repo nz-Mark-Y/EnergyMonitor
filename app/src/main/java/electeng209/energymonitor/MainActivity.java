@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     // ||Right now it just displays the most recent MyData in a textView          ||
                     // ||Feel free to add helper functions and other classes                      ||
                     // ||=========================================================================||
-                    dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + "Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
+                    dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + " Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
                 }
             }
 
