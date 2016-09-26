@@ -3,6 +3,7 @@ package electeng209.energymonitor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
