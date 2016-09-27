@@ -1,12 +1,15 @@
 package electeng209.energymonitor;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,18 +23,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Map;
 
-import android.view.View;
-import android.content.Intent;
-
-public class MainActivity extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
-
         final TextView dataDisplay = (TextView)findViewById(R.id.textView);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -62,20 +61,16 @@ public class MainActivity extends AppCompatActivity {
                             dataDisplay.setText(e.getMessage());
                         }
                         MyData myData = new MyData(number, value);
-
                         dataArrayList.add(myData);
                     }
                     dataArrayList = sortArray(dataArrayList);
-                    //for (int i=0;i<dataArrayList.size();i++){
-                    //   System.out.println(dataArrayList.get(i).value);
-                    //}
                     // ||=========================================================================||
                     // ||At this stage, the last MyData in the array is the most recent data value||
                     // ||So display code goes here.                                               ||
                     // ||Right now it just displays the most recent MyData in a textView          ||
                     // ||Feel free to add helper functions and other classes                      ||
                     // ||=========================================================================||
-                    dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + " Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
+                    //dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + " Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
                 }
             }
 
@@ -85,24 +80,25 @@ public class MainActivity extends AppCompatActivity {
                 dataDisplay.setText("Error: " + error.toException());
             }
         });
-            Button graphsButton = (Button) findViewById(R.id.graphButton);
-            graphsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToGraphs();
-                }
-            });
 
-        Button settingsButton = (Button) findViewById(R.id.settingsButton);
+        Button graphsButton = (Button) findViewById(R.id.graphButton);
+        graphsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToGraphs();
+            }
+        });
+
+        Button settingsButton = (Button) findViewById(R.id.realTimeButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSettings();
+                goToRealTime();
             }
         });
     }
 
-    private ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
+    public ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
         for(int i=1;i<inputList.size();i++) {
             MyData temp;
             if (inputList.get(i-1).number > inputList.get(i).number) {
@@ -114,12 +110,13 @@ public class MainActivity extends AppCompatActivity {
         return inputList;
     }
 
+    private void goToRealTime() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     private void goToGraphs() {
         Intent intent = new Intent(this, Graphs.class);
         startActivity(intent);
     }
-    private void goToSettings() {
-        Intent intent = new Intent(this, Settings.class);
-        startActivity(intent);
-    }
+
 }

@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="electeng209.energymonitor.MainActivity">
 
     <TextView
@@ -19,16 +15,48 @@
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#0066ff"
+            android:text="@string/real_time"
+            android:id="@+id/realTimeButton" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/graphs"
+            android:id="@+id/graphButton"
+            android:color="#0066ff"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/settings"
+            android:id="@+id/settingsButton" />
+
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/RealPower"
-        android:layout_marginTop="100dp"
         android:text="@string/RealPower"
         android:textSize="22sp"
         android:textColor="#000000"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,7 +76,7 @@
         android:id="@+id/totalPower"
         android:textColor="#000000"
         android:textSize="22sp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/powerDisplayed"
         android:layout_centerHorizontal="true" />
 
@@ -64,30 +92,5 @@
         android:layout_alignRight="@+id/powerDisplayed"
         android:layout_alignEnd="@+id/powerDisplayed" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/graphs"
-        android:id="@+id/graphButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/real_time"
-        android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/graphButton"
-        android:layout_toStartOf="@+id/graphButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings"
-        android:id="@+id/settingsButton"
-        android:layout_alignTop="@+id/graphButton"
-        android:layout_toRightOf="@+id/graphButton"
-        android:layout_toEndOf="@+id/graphButton" />
 
 </RelativeLayout>
