@@ -11,75 +11,71 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Graphs extends AppCompatActivity {
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.Series;
+import java.util.Random;
 
+public class Graphs extends AppCompatActivity {
+    LineGraphSeries<DataPoint> mSeries1;
+    ArrayList<MyData> dataArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphs);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
-        final TextView dataDisplay = (TextView)findViewById(R.id.textView);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Map<String, String> myMap = (Map)dataSnapshot.getValue();
-                if (!(myMap == null)) {
-                    String[] dataArray = myMap.values().toArray(new String[0]);
-                    ArrayList<MyData> dataArrayList = new ArrayList<>();
-                    int number;
-                    float value;
-                    String valueString;
-                    for (int i=0;i<dataArray.length;i++) {
-                        try {
-                            JSONObject obj = new JSONObject(dataArray[i]);
-                            number = obj.getInt("number");
-                            valueString = obj.getString("value");
-                            value = Float.parseFloat(valueString);
-                        }  catch(JSONException e) {
-                            number = 0;
-                            value = 0;
-                            dataDisplay.setText(e.getMessage());
-                        }
-                        MyData myData = new MyData(number, value);
-                        dataArrayList.add(myData);
-                    }
-                    dataArrayList = sortArray(dataArrayList);
-                    // ||=========================================================================||
-                    // ||At this stage, the last MyData in the array is the most recent data value||
-                    // ||So display code goes here.                                               ||
-                    // ||Right now it just displays the most recent MyData in a textView          ||
-                    // ||Feel free to add helper functions and other classes                      ||
-                    // ||=========================================================================||
-                    //dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + " Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String dataString = dataSnapshot.getValue(String.class);
+                String[] dataArray = dataString.split(",");
+                int myNumber = Integer.parseInt(dataArray[0].substring(16));
+                float myValue = Float.parseFloat(dataArray[1].substring(14,dataArray[1].indexOf("}")));
+                MyData myData = new MyData(myNumber, myValue);
+                dataArrayList.add(myData);
+                //System.out.println(dataArrayList.size());
+                graphDrawer();
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                dataDisplay.setText("Error: " + error.toException());
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
+
 
         Button graphsButton = (Button) findViewById(R.id.realTimeButton);
         graphsButton.setOnClickListener(new View.OnClickListener() {
@@ -98,25 +94,41 @@ public class Graphs extends AppCompatActivity {
         });
     }
 
-    public ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
-        for(int i=1;i<inputList.size();i++) {
-            MyData temp;
-            if (inputList.get(i-1).number > inputList.get(i).number) {
-                temp = inputList.get(i-1);
-                inputList.set(i-1,inputList.get(i));
-                inputList.set(i, temp);
-            }
-        }
-        return inputList;
-    }
-
     private void goToRealTime() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
     private void goToSettings() {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
+
+    private DataPoint[] generateData() {
+        int count = dataArrayList.size();
+        DataPoint[] values = new DataPoint[count];
+        for (int i=0; i<count; i++) {
+            double x = dataArrayList.get(i).number;
+            double y = dataArrayList.get(i).value;
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
+        }
+        return values;
+    }
+
+    private void graphDrawer() {
+        //System.out.println(value);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        mSeries1 = new LineGraphSeries<DataPoint>(generateData());
+        graph.addSeries(mSeries1);
+        if (dataArrayList.size() > 50) {
+            graph.getViewport().setScalable(true);
+            graph.getViewport().setScrollable(true);
+            graph.getViewport().setXAxisBoundsManual(true);
+            graph.getViewport().setMaxX(dataArrayList.size());
+            graph.getViewport().setMinX(dataArrayList.size() -50);
+        }
+    }
+    Random mRand = new Random();
 
 }

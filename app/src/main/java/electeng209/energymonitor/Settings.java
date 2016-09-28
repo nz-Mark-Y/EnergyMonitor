@@ -36,7 +36,7 @@ public class Settings extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
 
-        // Read from the database
+        /*// Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,7 +79,7 @@ public class Settings extends AppCompatActivity {
                 // Failed to read value
                 dataDisplay.setText("Error: " + error.toException());
             }
-        });
+        });*/
 
         Button graphsButton = (Button) findViewById(R.id.graphButton);
         graphsButton.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class Settings extends AppCompatActivity {
         });
     }
 
-    public ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
+    /*public ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
         for(int i=1;i<inputList.size();i++) {
             MyData temp;
             if (inputList.get(i-1).number > inputList.get(i).number) {
@@ -108,7 +108,7 @@ public class Settings extends AppCompatActivity {
             }
         }
         return inputList;
-    }
+    }*/
 
     private void goToRealTime() {
         Intent intent = new Intent(this, MainActivity.class);

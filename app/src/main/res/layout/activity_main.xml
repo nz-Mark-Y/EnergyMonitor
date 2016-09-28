@@ -5,16 +5,6 @@
     android:layout_height="match_parent"
     tools:context="electeng209.energymonitor.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/loading_data"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -91,6 +81,19 @@
         android:layout_below="@+id/totalPower"
         android:layout_alignRight="@+id/powerDisplayed"
         android:layout_alignEnd="@+id/powerDisplayed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/loading_data"
+        android:id="@+id/textView"
+        android:visibility="visible"
+        android:layout_below="@+id/totalPowerDisplayed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:textColor="#000"
+        android:textSize="22sp" />
 
 
 </RelativeLayout>

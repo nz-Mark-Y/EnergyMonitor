@@ -53,6 +53,11 @@
             android:layout_gravity="center_horizontal"
             android:textSize="22sp"
             android:textColor="#000" />
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:id="@+id/graph" />
     </LinearLayout>
 
 </RelativeLayout>
