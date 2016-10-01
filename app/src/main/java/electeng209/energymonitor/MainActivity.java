@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Button;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,12 +26,14 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<MyData> dataArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
+
     }
 
     @Override
@@ -39,54 +42,40 @@ public class MainActivity extends AppCompatActivity {
         final TextView dataDisplay = (TextView) findViewById(R.id.textView);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Map<String, String> myMap = (Map) dataSnapshot.getValue();
-                if (!(myMap == null)) {
-                    String[] dataArray = myMap.values().toArray(new String[0]);
-                    ArrayList<MyData> dataArrayList = new ArrayList<>();
-                    int number = 0;
-                    float value = 0;
-                    String valueString;
-                    for (int i = 0; i < dataArray.length; i++) {
-                        try {
-                            JSONObject obj = new JSONObject(dataArray[i]);
-                            number = obj.getInt("number");
-                            valueString = obj.getString("value");
-                            value = Float.parseFloat(valueString);
-                        } catch (JSONException e) {
-                            number = 0;
-                            value = 0;
-                            dataDisplay.setText(e.getMessage());
-                        }
-                        MyData myData = new MyData(number, value);
-
-                        dataArrayList.add(myData);
-                    }
-                    //dataArrayList = sortArray(dataArrayList);
-                    /*for (int i = 0; i < dataArrayList.size(); i++) {
-                        System.out.println(dataArrayList.get(i).number);
-                    }*/
-                    // ||=========================================================================||
-                    // ||At this stage, the last MyData in the array is the most recent data value||
-                    // ||So display code goes here.                                               ||
-                    // ||Right now it just displays the most recent MyData in a textView          ||
-                    // ||Feel free to add helper functions and other classes                      ||
-                    // ||=========================================================================||
-                    dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size() - 1).number + " Value is: " + dataArrayList.get(dataArrayList.size() - 1).value);
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String dataString = dataSnapshot.getValue(String.class);
+                String[] dataArray = dataString.split(",");
+                int myNumber = Integer.parseInt(dataArray[0].substring(16));
+                float myValue = Float.parseFloat(dataArray[1].substring(14,dataArray[1].indexOf("}")));
+                MyData myData = new MyData(myNumber, myValue);
+                dataArrayList.add(myData);
+                dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size() - 1).number + " Value is: " + dataArrayList.get(dataArrayList.size() - 1).value);
+                //System.out.println(dataArrayList.size());
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                dataDisplay.setText("Error: " + error.toException());
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                ArrayList<MyData> dataArrayList = new ArrayList<>();
+                dataDisplay.setText("Data Cleared Remotely");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
+
         Button graphsButton = (Button) findViewById(R.id.graphButton);
         graphsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,17 +93,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<MyData> sortArray(ArrayList<MyData> inputList) {
-        for (int i = 1; i < inputList.size(); i++) {
-            MyData temp;
-            if (inputList.get(i - 1).number > inputList.get(i).number) {
-                temp = inputList.get(i - 1);
-                inputList.set(i - 1, inputList.get(i));
-                inputList.set(i, temp);
-            }
-        }
-        return inputList;
-    }
 
     private void goToGraphs() {
         Intent intent = new Intent(this, Graphs.class);

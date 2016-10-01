@@ -40,7 +40,11 @@ public class Graphs extends AppCompatActivity {
         setContentView(R.layout.activity_graphs);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
         myRef.addChildEventListener(new ChildEventListener() {
@@ -63,7 +67,8 @@ public class Graphs extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                dataArrayList.clear();
+                graphDrawer();
             }
 
             @Override
@@ -126,9 +131,8 @@ public class Graphs extends AppCompatActivity {
             graph.getViewport().setScrollable(true);
             graph.getViewport().setXAxisBoundsManual(true);
             graph.getViewport().setMaxX(dataArrayList.size());
-            graph.getViewport().setMinX(dataArrayList.size() -50);
+            graph.getViewport().setMinX(dataArrayList.size() -50.5);
         }
     }
-    Random mRand = new Random();
 
 }
