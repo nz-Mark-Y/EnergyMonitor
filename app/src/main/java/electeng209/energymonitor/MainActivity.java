@@ -3,30 +3,26 @@ package electeng209.energymonitor;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Button;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import android.view.View;
 import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<MyData> dataArrayList = new ArrayList<>();
+    ArrayList<MyData> powerArrayList = new ArrayList<>();
+    ArrayList<MyData> voltageArrayList = new ArrayList<>();
+    ArrayList<MyData> currentArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         final TextView dataDisplay = (TextView) findViewById(R.id.textView);
+        final TextView currentPower = (TextView) findViewById(R.id.powerDisplayed);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
         myRef.addChildEventListener(new ChildEventListener() {
@@ -48,11 +45,22 @@ public class MainActivity extends AppCompatActivity {
                 String dataString = dataSnapshot.getValue(String.class);
                 String[] dataArray = dataString.split(",");
                 int myNumber = Integer.parseInt(dataArray[0].substring(16));
-                float myValue = Float.parseFloat(dataArray[1].substring(14,dataArray[1].indexOf("}")));
-                MyData myData = new MyData(myNumber, myValue);
-                dataArrayList.add(myData);
-                dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size() - 1).number + " Value is: " + dataArrayList.get(dataArrayList.size() - 1).value);
-                //System.out.println(dataArrayList.size());
+                String myUnit = dataArray[1].substring(dataArray[0].lastIndexOf(":"),dataArray[0].lastIndexOf(":")+1);
+                float myValue = Float.parseFloat(dataArray[2].substring(dataArray[2].lastIndexOf(":")+2,dataArray[2].lastIndexOf("}")));
+                MyData myData = new MyData(myNumber, myValue, myUnit);
+                if (myUnit.equals("W")) {
+                    powerArrayList.add(myData);
+                } else if (myUnit.equals("A")){
+                    currentArrayList.add(myData);
+                } else {
+                    voltageArrayList.add(myData);
+                }
+
+                if (powerArrayList.size() != 0) {
+                    currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
+                    dataDisplay.setText("Number is: " + powerArrayList.get(powerArrayList.size() - 1).number + " Value is: " + powerArrayList.get(powerArrayList.size() - 1).value + powerArrayList.get(powerArrayList.size() - 1).unit);
+                }
+                //System.out.println(powerArrayList.size());
             }
 
             @Override
@@ -62,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                ArrayList<MyData> dataArrayList = new ArrayList<>();
                 dataDisplay.setText("Data Cleared Remotely");
             }
 

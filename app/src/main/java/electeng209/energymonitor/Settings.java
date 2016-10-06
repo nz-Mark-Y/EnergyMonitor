@@ -45,7 +45,7 @@ public class Settings extends AppCompatActivity {
                 Map<String, String> myMap = (Map)dataSnapshot.getValue();
                 if (!(myMap == null)) {
                     String[] dataArray = myMap.values().toArray(new String[0]);
-                    ArrayList<MyData> dataArrayList = new ArrayList<>();
+                    ArrayList<MyData> powerArrayList = new ArrayList<>();
                     int number;
                     float value;
                     String valueString;
@@ -61,16 +61,16 @@ public class Settings extends AppCompatActivity {
                             dataDisplay.setText(e.getMessage());
                         }
                         MyData myData = new MyData(number, value);
-                        dataArrayList.add(myData);
+                        powerArrayList.add(myData);
                     }
-                    dataArrayList = sortArray(dataArrayList);
+                    powerArrayList = sortArray(powerArrayList);
                     // ||=========================================================================||
                     // ||At this stage, the last MyData in the array is the most recent data value||
                     // ||So display code goes here.                                               ||
                     // ||Right now it just displays the most recent MyData in a textView          ||
                     // ||Feel free to add helper functions and other classes                      ||
                     // ||=========================================================================||
-                    //dataDisplay.setText("Number is:" + dataArrayList.get(dataArrayList.size()-1).number + " Value is: " + dataArrayList.get(dataArrayList.size()-1).value);
+                    //dataDisplay.setText("Number is:" + powerArrayList.get(powerArrayList.size()-1).number + " Value is: " + powerArrayList.get(powerArrayList.size()-1).value);
                 }
             }
 

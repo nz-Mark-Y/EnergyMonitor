@@ -45,18 +45,17 @@
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/power_graph"
-            android:id="@+id/powerGraph"
-            android:layout_gravity="center_horizontal"
-            android:textSize="22sp"
-            android:textColor="#000" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spinner"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:spinnerMode="dropdown" />
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="425dp"
             android:id="@+id/graph" />
     </LinearLayout>
 
