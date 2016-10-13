@@ -105,7 +105,7 @@ public class Graphs extends AppCompatActivity {
                     powerArrayList.add(myData);
                 } else if (myUnit.equals("A")){
                     currentArrayList.add(myData);
-                } else {
+                } else if (myUnit.equals("V")){
                     voltageArrayList.add(myData);
                 }
                 //System.out.println(powerArrayList.size());
@@ -203,14 +203,17 @@ public class Graphs extends AppCompatActivity {
 
     private void graphDrawer() {
         //System.out.println(value);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        graph.removeAllSeries();
-        mSeries1 = new LineGraphSeries<>(generateData());
-        graph.addSeries(mSeries1);
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScrollable(true);
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMaxX(arrayList.size()+10);
+
+            GraphView graph = (GraphView) findViewById(R.id.graph);
+            graph.removeAllSeries();
+            mSeries1 = new LineGraphSeries<>(generateData());
+            mSeries1.setThickness(8);
+            graph.addSeries(mSeries1);
+            graph.getViewport().setScalable(true);
+            graph.getViewport().setScrollable(true);
+            graph.getViewport().setXAxisBoundsManual(true);
+            graph.getViewport().setMaxX(arrayList.size() + 10);
+        
         /*if (arrayList.size() > 50) {
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);
