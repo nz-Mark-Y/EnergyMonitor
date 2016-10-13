@@ -120,7 +120,9 @@ public class Graphs extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                arrayList.clear();
+                powerArrayList.clear();
+                currentArrayList.clear();
             }
 
             @Override
@@ -205,13 +207,17 @@ public class Graphs extends AppCompatActivity {
         graph.removeAllSeries();
         mSeries1 = new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
-        if (powerArrayList.size() > 50) {
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(arrayList.size()+10);
+        /*if (arrayList.size() > 50) {
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);
             graph.getViewport().setXAxisBoundsManual(true);
-            graph.getViewport().setMaxX(powerArrayList.size());
-            graph.getViewport().setMinX(powerArrayList.size() -50.5);
-        }
+            graph.getViewport().setMaxX(arrayList.size());
+            graph.getViewport().setMinX(arrayList.size() -50.5);
+        }*/
     }
 
 }
