@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#404040"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="electeng209.energymonitor.MainActivity">
 
     <LinearLayout
@@ -54,11 +55,103 @@
         android:layout_height="wrap_content"
         android:text="@string/powerDisplayed"
         android:id="@+id/powerDisplayed"
-        android:layout_marginTop="52dp"
         android:textColor="#ffffff"
         android:textSize="22sp"
+        android:layout_alignBottom="@+id/gauge1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/loading_data"
+        android:id="@+id/textView"
+        android:visibility="gone"
+        android:layout_below="@+id/totalPowerDisplayed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="#ffffff"
+        android:textSize="22sp" />
+
+    <pl.pawelkleczkowski.customgauge.CustomGauge
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:gaugeEndValue="750"
+        app:gaugePointStartColor="#40ff00"
+        app:gaugePointEndColor="#ff0000"
+        app:gaugeStartAngle="135"
+        app:gaugeStartValue="0"
+        app:gaugeStrokeCap="BUTT"
+        app:gaugeStrokeColor="#808080"
+        app:gaugeStrokeWidth="20dp"
+        app:gaugeSweepAngle="270"
+        app:gaugeDividerSize="8"
+        app:gaugeDividerColor="#ffff00"
+        app:gaugeDividerStep="10"
+        app:gaugeDividerDrawFirst="false"
+        app:gaugeDividerDrawLast="true"
+        android:id="@+id/gauge"
+        android:layout_below="@+id/gauge1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <pl.pawelkleczkowski.customgauge.CustomGauge
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        app:gaugeEndValue="700"
+        app:gaugePointStartColor="#40ff00"
+        app:gaugePointEndColor="#ff0000"
+        app:gaugeStartAngle="135"
+        app:gaugeStartValue="0"
+        app:gaugeStrokeCap="BUTT"
+        app:gaugeStrokeColor="#808080"
+        app:gaugeStrokeWidth="20dp"
+        app:gaugeSweepAngle="270"
+        app:gaugeDividerSize="6"
+        app:gaugeDividerColor="#ffff00"
+        app:gaugeDividerStep="10"
+        app:gaugeDividerDrawFirst="false"
+        app:gaugeDividerDrawLast="true"
+        android:id="@+id/gauge1"
+
         android:layout_below="@+id/RealPower"
         android:layout_centerHorizontal="true" />
+
+    <pl.pawelkleczkowski.customgauge.CustomGauge
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:gaugeEndValue="1500"
+        app:gaugePointStartColor="#40ff00"
+        app:gaugePointEndColor="#ff0000"
+        app:gaugeStartAngle="135"
+        app:gaugeStartValue="0"
+        app:gaugeStrokeCap="BUTT"
+        app:gaugeStrokeColor="#808080"
+        app:gaugeStrokeWidth="20dp"
+        app:gaugeSweepAngle="270"
+        app:gaugeDividerSize="16"
+        app:gaugeDividerColor="#ffff00"
+        app:gaugeDividerStep="10"
+        app:gaugeDividerDrawFirst="false"
+        app:gaugeDividerDrawLast="true"
+        android:id="@+id/gauge2"
+        android:layout_alignTop="@+id/gauge"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,8 +160,8 @@
         android:id="@+id/totalPower"
         android:textColor="#ffffff"
         android:textSize="22sp"
-        android:layout_marginTop="60dp"
-        android:layout_below="@+id/powerDisplayed"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/gauge2"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -78,7 +171,7 @@
         android:id="@+id/totalPowerDisplayed"
         android:textSize="22sp"
         android:textColor="#ffffff"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/totalPower"
         android:layout_alignRight="@+id/powerDisplayed"
         android:layout_alignEnd="@+id/powerDisplayed" />
@@ -86,15 +179,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/loading_data"
-        android:id="@+id/textView"
-        android:visibility="visible"
-        android:layout_below="@+id/totalPowerDisplayed"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:text="@string/_0a"
+        android:id="@+id/currentDisp"
+        android:textSize="22sp"
         android:textColor="#ffffff"
-        android:textSize="22sp" />
+        android:layout_marginBottom="47dp"
+        android:layout_alignBottom="@+id/gauge"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="45dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_0v"
+        android:id="@+id/voltageDisp"
+        android:textSize="22sp"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/currentDisp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="45dp" />
 
 
 </RelativeLayout>

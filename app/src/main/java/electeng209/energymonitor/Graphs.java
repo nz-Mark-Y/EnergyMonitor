@@ -231,7 +231,6 @@ public class Graphs extends AppCompatActivity {
             } else if (drawPower == 2){
                 mSeries1.setColor(Color.GREEN);
             }
-            System.out.println(mSeries1.getColor());
             //graph.getGridLabelRenderer().reloadStyles();
             graph.addSeries(mSeries1);
             graph.getViewport().setScalable(true);

@@ -31,3 +31,11 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'pl.pawelkleczkowski.customgauge:CustomGauge:1.0.3'
+}

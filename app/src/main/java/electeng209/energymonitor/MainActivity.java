@@ -1,5 +1,6 @@
 package electeng209.energymonitor;
 
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,11 +19,17 @@ import java.util.ArrayList;
 import android.view.View;
 import android.content.Intent;
 
+import pl.pawelkleczkowski.customgauge.CustomGauge;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<MyData> powerArrayList = new ArrayList<>();
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
+    private CustomGauge gauge1;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         final TextView dataDisplay = (TextView) findViewById(R.id.textView);
         final TextView currentPower = (TextView) findViewById(R.id.powerDisplayed);
+        final TextView currentVoltage = (TextView) findViewById(R.id.voltageDisp);
+        final TextView currentCurrent = (TextView) findViewById(R.id.currentDisp);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
         myRef.addChildEventListener(new ChildEventListener() {
@@ -50,15 +60,19 @@ public class MainActivity extends AppCompatActivity {
                 MyData myData = new MyData(myNumber, myValue, myUnit);
                 if (myUnit.equals("W")) {
                     powerArrayList.add(myData);
+                    gauge1 = (CustomGauge) findViewById(R.id.gauge1);
+                    gauge1.setValue((int)(myValue*100));
+                    currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
                 } else if (myUnit.equals("A")){
                     currentArrayList.add(myData);
+                    gauge1 = (CustomGauge) findViewById(R.id.gauge);
+                    gauge1.setValue((int)(myValue*1000));
+                    currentCurrent.setText(currentArrayList.get(currentArrayList.size() -1).value + "A");
                 } else {
                     voltageArrayList.add(myData);
-                }
-
-                if (powerArrayList.size() != 0) {
-                    currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
-                    dataDisplay.setText("Number is: " + powerArrayList.get(powerArrayList.size() - 1).number + " Value is: " + powerArrayList.get(powerArrayList.size() - 1).value + powerArrayList.get(powerArrayList.size() - 1).unit);
+                    gauge1 = (CustomGauge) findViewById(R.id.gauge2);
+                    gauge1.setValue((int)(myValue*100));
+                    currentVoltage.setText(voltageArrayList.get(voltageArrayList.size() -1).value + "V");
                 }
                 //System.out.println(powerArrayList.size());
             }

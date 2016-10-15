@@ -10,6 +10,8 @@
     <string name="real_time">Real Time</string>
     <string name="power_graph">Power Graph</string>
     <string name="settings_text">Settings:</string>
+    <string name="_0v">0.00V</string>
+    <string name="_0a">0.00A</string>
 
     <string-array name="graphsArray" id="graphArray">
         <item>Real Time Power (W)</item>
