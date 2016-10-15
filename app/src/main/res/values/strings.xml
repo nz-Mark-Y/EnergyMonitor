@@ -2,7 +2,7 @@
     <string name="app_name">Wireless Energy Monitor V 0.1</string>
     <string name="loading_data">Loading data...</string>
     <string name="RealPower">Real Time Power Usage:</string>
-    <string name="powerDisplayed">0W</string>
+    <string name="powerDisplayed">0.00W</string>
     <string name="totalPower">Total Power Consumed Today:</string>
     <string name="totalPowerDisplayed">0KJ</string>
     <string name="graphs">Graphs</string>
