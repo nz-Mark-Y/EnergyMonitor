@@ -12,8 +12,8 @@
     <string name="settings_text">Settings:</string>
 
     <string-array name="graphsArray" id="graphArray">
-        <item>Power (W)</item>
-        <item>Current (A)</item>
-        <item>Voltage (V)</item>
+        <item>Real Time Power (W)</item>
+        <item>Real Time Current (A)</item>
+        <item>Real Time Voltage (V)</item>
     </string-array>
 </resources>

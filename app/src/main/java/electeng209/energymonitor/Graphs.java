@@ -1,6 +1,7 @@
 package electeng209.energymonitor;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -32,7 +33,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.Series;
-import java.util.Random;
+
+import android.graphics.PorterDuff;
 
 public class Graphs extends AppCompatActivity {
     int drawPower = 2;
@@ -78,11 +80,19 @@ public class Graphs extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Spinner mySpinner = (Spinner) findViewById(R.id.spinner);
                 if (arrayList.size() !=0) {
                     GraphView graph = (GraphView) findViewById(R.id.graph);
                     graph.removeAllSeries();
                     drawPower = i;
                     graphDrawer();
+                }
+                if (i == 0){
+                    mySpinner.getBackground().setColorFilter(Color.argb(190,20,20,255), PorterDuff.Mode.SRC_ATOP);
+                } else if(i == 1){
+                    mySpinner.getBackground().setColorFilter(Color.argb(190,255,20,20), PorterDuff.Mode.SRC_ATOP);
+                }else{
+                    mySpinner.getBackground().setColorFilter(Color.argb(190,20,255,20), PorterDuff.Mode.SRC_ATOP);
                 }
             }
 
@@ -91,6 +101,14 @@ public class Graphs extends AppCompatActivity {
 
             }
         });
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.getGridLabelRenderer().setGridColor(Color.argb(255,255,255,255));
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Watts (W)");
+        graph.getGridLabelRenderer().setVerticalAxisTitleColor(Color.argb(255,255,255,255));
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.argb(255,255,255,255));
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Data points");
+        graph.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.argb(255,255,255,255));
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.argb(255,255,255,255));
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -208,6 +226,13 @@ public class Graphs extends AppCompatActivity {
             graph.removeAllSeries();
             mSeries1 = new LineGraphSeries<>(generateData());
             mSeries1.setThickness(8);
+            if (drawPower == 1) {
+                mSeries1.setColor(Color.RED);
+            } else if (drawPower == 2){
+                mSeries1.setColor(Color.GREEN);
+            }
+            System.out.println(mSeries1.getColor());
+            //graph.getGridLabelRenderer().reloadStyles();
             graph.addSeries(mSeries1);
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);

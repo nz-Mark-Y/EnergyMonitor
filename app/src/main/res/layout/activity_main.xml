@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#404040"
     tools:context="electeng209.energymonitor.MainActivity">
 
     <LinearLayout
@@ -44,7 +45,7 @@
         android:id="@+id/RealPower"
         android:text="@string/RealPower"
         android:textSize="22sp"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp" />
 
@@ -54,7 +55,7 @@
         android:text="@string/powerDisplayed"
         android:id="@+id/powerDisplayed"
         android:layout_marginTop="52dp"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="22sp"
         android:layout_below="@+id/RealPower"
         android:layout_centerHorizontal="true" />
@@ -64,7 +65,7 @@
         android:layout_height="wrap_content"
         android:text="@string/totalPower"
         android:id="@+id/totalPower"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="22sp"
         android:layout_marginTop="60dp"
         android:layout_below="@+id/powerDisplayed"
@@ -76,7 +77,7 @@
         android:text="@string/totalPowerDisplayed"
         android:id="@+id/totalPowerDisplayed"
         android:textSize="22sp"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/totalPower"
         android:layout_alignRight="@+id/powerDisplayed"
@@ -92,7 +93,7 @@
         android:layout_below="@+id/totalPowerDisplayed"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:textColor="#000"
+        android:textColor="#ffffff"
         android:textSize="22sp" />
 
 
