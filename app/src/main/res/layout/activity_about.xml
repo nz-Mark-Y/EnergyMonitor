@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#404040"
+    android:layout_gravity="center"
     tools:context="electeng209.energymonitor.Graphs">
 
     <LinearLayout
@@ -32,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/settings"
+            android:text="@string/about"
             android:textColor="#0066ff"
             android:id="@+id/settingsButton" />
 
@@ -43,16 +45,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout2"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_text"
+            android:text="@string/about_us_text"
             android:id="@+id/settingsText"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textSize="22sp"
-            android:textColor="#000" />
+            android:textColor="#ffffff" />
+
     </LinearLayout>
 
 </RelativeLayout>

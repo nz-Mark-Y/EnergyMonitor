@@ -4,12 +4,12 @@
     <string name="RealPower">Real Time Power Usage:</string>
     <string name="powerDisplayed">0.00W</string>
     <string name="totalPower">Total Power Consumed Today:</string>
-    <string name="totalPowerDisplayed">0KJ</string>
+    <string name="totalPowerDisplayed">0.69KWH</string>
     <string name="graphs">Graphs</string>
-    <string name="settings">Settings</string>
+    <string name="about">About Us</string>
     <string name="real_time">Real Time</string>
     <string name="power_graph">Power Graph</string>
-    <string name="settings_text">Settings:</string>
+    <string name="about_us_text">Second year Compsys students</string>
     <string name="_0v">0.00V</string>
     <string name="_0a">0.00A</string>
 

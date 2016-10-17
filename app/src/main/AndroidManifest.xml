@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Graphs" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".About"></activity>
     </application>
 
 </manifest>

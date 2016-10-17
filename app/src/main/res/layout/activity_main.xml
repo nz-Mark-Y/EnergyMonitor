@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/settings"
+            android:text="@string/about"
             android:id="@+id/settingsButton" />
 
     </LinearLayout>
@@ -171,10 +171,9 @@
         android:id="@+id/totalPowerDisplayed"
         android:textSize="22sp"
         android:textColor="#ffffff"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/totalPower"
-        android:layout_alignRight="@+id/powerDisplayed"
-        android:layout_alignEnd="@+id/powerDisplayed" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"

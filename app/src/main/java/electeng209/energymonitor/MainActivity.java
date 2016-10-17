@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Button;
 
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToSettings() {
-        Intent intent = new Intent(this, Settings.class);
+        Intent intent = new Intent(this, About.class);
         startActivity(intent);
     }
 }
