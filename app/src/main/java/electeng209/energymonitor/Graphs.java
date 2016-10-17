@@ -92,7 +92,6 @@ public class Graphs extends AppCompatActivity {
         });
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getGridLabelRenderer().setGridColor(Color.argb(255,255,255,255));
-        graph.getGridLabelRenderer().setVerticalAxisTitle("Watts (W)");
         graph.getGridLabelRenderer().setVerticalAxisTitleColor(Color.argb(255,255,255,255));
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.argb(255,255,255,255));
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Data points");
@@ -217,8 +216,12 @@ public class Graphs extends AppCompatActivity {
             mSeries1.setThickness(8);
             if (drawPower == 1) {
                 mSeries1.setColor(Color.RED);
+                graph.getGridLabelRenderer().setVerticalAxisTitle("Amps (A)");
             } else if (drawPower == 2){
                 mSeries1.setColor(Color.GREEN);
+                graph.getGridLabelRenderer().setVerticalAxisTitle("Voltage (V)");
+            } else {
+                graph.getGridLabelRenderer().setVerticalAxisTitle("Watts (W)");
             }
             //graph.getGridLabelRenderer().reloadStyles();
             graph.addSeries(mSeries1);
