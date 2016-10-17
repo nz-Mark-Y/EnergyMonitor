@@ -19,7 +19,7 @@ import android.view.View;
 import android.content.Intent;
 
 import pl.pawelkleczkowski.customgauge.CustomGauge;
-
+//ToDo Add comments to all code files of the app
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<MyData> powerArrayList = new ArrayList<>();
