@@ -8,6 +8,7 @@ android {
         applicationId "electeng209.energymonitor"
         minSdkVersion 15
         targetSdkVersion 24
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -28,6 +29,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:9.4.0'
     compile 'com.jjoe64:graphview:4.2.1'
     compile fileTree(dir: 'libs', include: ['Library'])
+    compile 'com.android.support:multidex:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

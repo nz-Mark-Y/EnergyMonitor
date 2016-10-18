@@ -217,12 +217,12 @@ public class Graphs extends AppCompatActivity {
             mSeries1.setThickness(8);
             if (drawPower == 1) {
                 mSeries1.setColor(Color.RED);
-                graph.getGridLabelRenderer().setVerticalAxisTitle("Amps (A)");
+                graph.getGridLabelRenderer().setVerticalAxisTitle("Current (A)");
             } else if (drawPower == 2){
                 mSeries1.setColor(Color.GREEN);
                 graph.getGridLabelRenderer().setVerticalAxisTitle("Voltage (V)");
             } else {
-                graph.getGridLabelRenderer().setVerticalAxisTitle("Watts (W)");
+                graph.getGridLabelRenderer().setVerticalAxisTitle("Power (W)");
             }
             //graph.getGridLabelRenderer().reloadStyles();
             graph.addSeries(mSeries1);
@@ -230,7 +230,7 @@ public class Graphs extends AppCompatActivity {
             graph.getViewport().setScrollable(true);
             graph.getViewport().setXAxisBoundsManual(true);
             graph.getViewport().setMaxX(arrayList.size() + 10);
-        
+
         /*if (arrayList.size() > 50) {
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);
