@@ -27,8 +27,8 @@ import java.text.NumberFormat;
 import android.graphics.PorterDuff;
 
 public class Graphs extends AppCompatActivity {
-    int drawPower = 2;
-    LineGraphSeries<DataPoint> mSeries1;//Declarions to be used later
+    int drawPower = 0;
+    LineGraphSeries<DataPoint> mSeries1;//Declarations to be used later
     ArrayList<MyData> powerArrayList = new ArrayList<>();
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
