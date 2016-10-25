@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
     ArrayList<Long> powerTimeStampList = new ArrayList<>();
-    float totalEnergyUsed = (float)0.0; //Initially total energy used is 0
+    static float totalEnergyUsed = (float)0.0; //Initially total energy used is 0
     private CustomGauge gauge1;//Custom gauge initialization
 
 
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 dataDisplay.setText("Data Cleared Remotely");//When data is cleared remotely
+                totalEnergyUsed = (float)0.0;
             }
 
             @Override

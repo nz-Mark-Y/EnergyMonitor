@@ -7,6 +7,7 @@ public class MyData {
     public int number;
     public float value;
     public String unit;
+    float totalEnergyUsed = (float)0.0;
 
     public MyData(int number, float value, String unit) {
         this.number = number;
