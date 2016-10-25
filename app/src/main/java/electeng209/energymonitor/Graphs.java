@@ -108,6 +108,21 @@ public class Graphs extends AppCompatActivity {
                 int myNumber = Integer.parseInt(dataArray[0].substring(16));
                 String myUnit = dataArray[1].substring(dataArray[0].lastIndexOf(":"),dataArray[0].lastIndexOf(":")+1);
                 float myValue = Float.parseFloat(dataArray[2].substring(dataArray[2].lastIndexOf(":")+2,dataArray[2].lastIndexOf("}")));
+
+                if (myUnit.equals("W")) {
+                    if (myValue > 9){
+                        myValue = 9;
+                    }
+                } else if (myUnit.equals("A")){
+                    if (myValue > 1){
+                        myValue = 1;
+                    }
+                } else if (myUnit.equals("V")){
+                    if (myValue > 14.5){
+                        myValue = (float)14.5;
+                    }
+                }
+
                 MyData myData = new MyData(myNumber, myValue, myUnit);
                 if (myUnit.equals("W")) {
                     powerArrayList.add(myData);
