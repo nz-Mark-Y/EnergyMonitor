@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                     gauge1 = (CustomGauge) findViewById(R.id.gauge1);
                     gauge1.setValue((int)(myValue*100));
                     currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
+
+                    powerTimeStampList.add(System.currentTimeMillis() / 1000);
+                    if(powerTimeStampList.size() > 1) {
+                        long difference = powerTimeStampList.get(powerTimeStampList.size() - 1) - powerTimeStampList.get(powerTimeStampList.size() - 2);
+                        totalEnergy.setText("My time " + difference); //powerTimeStampList.get(powerTimeStampList.size()-1)
+                    }
                 } else if (myUnit.equals("A")){
                     currentArrayList.add(myData);
                     gauge1 = (CustomGauge) findViewById(R.id.gauge);
@@ -77,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     gauge1.setValue((int)(myValue*100));
                     currentVoltage.setText(voltageArrayList.get(voltageArrayList.size() -1).value + "V");
                 }
-                powerTimeStampList.add(System.currentTimeMillis() / 1000);
-                totalEnergy.setText("My time " + powerTimeStampList.get(powerTimeStampList.size()-1) + " " + powerTimeStampList.size());
+
                 //System.out.println(powerArrayList.size());
             }
 

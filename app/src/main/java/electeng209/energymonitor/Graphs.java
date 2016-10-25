@@ -19,9 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import java.text.NumberFormat;
 
 import android.graphics.PorterDuff;
 
@@ -210,8 +212,14 @@ public class Graphs extends AppCompatActivity {
 
     private void graphDrawer() {
         //System.out.println(value);
+            NumberFormat nf = NumberFormat.getInstance();
+            NumberFormat nf1 = NumberFormat.getInstance();
+            nf.setMinimumFractionDigits(2);
+            nf1.setMinimumFractionDigits(0);
 
             GraphView graph = (GraphView) findViewById(R.id.graph);
+            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(nf1,nf));
+
             graph.removeAllSeries();
             mSeries1 = new LineGraphSeries<>(generateData());
             mSeries1.setThickness(8);
