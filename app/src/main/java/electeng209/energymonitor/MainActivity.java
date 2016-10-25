@@ -1,42 +1,40 @@
 package electeng209.energymonitor;
 
 
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar; //Imports for generic app functionality
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Button;
+import java.util.ArrayList;
+import android.view.View;
+import android.content.Intent;
 
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.ChildEventListener; //Imports for firebase
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
+import pl.pawelkleczkowski.customgauge.CustomGauge; //Import for custom gauges
 
-import android.view.View;
-import android.content.Intent;
-
-import pl.pawelkleczkowski.customgauge.CustomGauge;
-//ToDo Add comments to all code files of the app
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<MyData> powerArrayList = new ArrayList<>();
+    ArrayList<MyData> powerArrayList = new ArrayList<>();//ArrayLists to store all the data
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
     ArrayList<Long> powerTimeStampList = new ArrayList<>();
-    float totalEnergyUsed = (float)0.0;
-    private CustomGauge gauge1;
+    float totalEnergyUsed = (float)0.0; //Initially total energy used is 0
+    private CustomGauge gauge1;//Custom gauge initialization
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); //Restored previously saved instance
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); //Override deafult actionbar at top
         getSupportActionBar().setCustomView(R.layout.actionbar);
 
     }
@@ -45,24 +43,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        final TextView dataDisplay = (TextView) findViewById(R.id.textView);
+        final TextView dataDisplay = (TextView) findViewById(R.id.textView); //Variables of used text fields in layout
         final TextView currentPower = (TextView) findViewById(R.id.powerDisplayed);
         final TextView currentVoltage = (TextView) findViewById(R.id.voltageDisp);
         final TextView currentCurrent = (TextView) findViewById(R.id.currentDisp);
         final TextView totalEnergy = (TextView) findViewById(R.id.totalPowerDisplayed);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("data");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();//Database initialization
+        DatabaseReference myRef = database.getReference("data");//data is stored under data field on database
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String dataString = dataSnapshot.getValue(String.class);
-                String[] dataArray = dataString.split(",");
+                String dataString = dataSnapshot.getValue(String.class);//Read from database each time new data is added
+                String[] dataArray = dataString.split(",");//Data extraction
                 int myNumber = Integer.parseInt(dataArray[0].substring(16));
                 String myUnit = dataArray[1].substring(dataArray[0].lastIndexOf(":"),dataArray[0].lastIndexOf(":")+1);
                 float myValue = Float.parseFloat(dataArray[2].substring(dataArray[2].lastIndexOf(":")+2,dataArray[2].lastIndexOf("}")));
 
-                if (myUnit.equals("W")) {
+                if (myUnit.equals("W")) {//Filtering out impossibly large values for each based on unit
                     if (myValue > 9){
                         myValue = 9;
                     }
@@ -76,19 +74,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                MyData myData = new MyData(myNumber, myValue, myUnit);
-                if (myUnit.equals("W")) {
+                MyData myData = new MyData(myNumber, myValue, myUnit);//Store the data in custom class
+                if (myUnit.equals("W")) {//Storage of read data
                     powerArrayList.add(myData);
                     gauge1 = (CustomGauge) findViewById(R.id.gauge1);
                     gauge1.setValue((int)(myValue*100));
                     currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
 
-                    powerTimeStampList.add(System.currentTimeMillis() / 1000);
+                    powerTimeStampList.add(System.currentTimeMillis());//Time stamping when the value was received
                     if(powerTimeStampList.size() > 1) {
-                        float timeDifference = ((powerTimeStampList.get(powerTimeStampList.size() - 1)) - (powerTimeStampList.get(powerTimeStampList.size() - 2)))/360;
+                        float timeDifference = ((powerTimeStampList.get(powerTimeStampList.size() - 1)) - (powerTimeStampList.get(powerTimeStampList.size() - 2))); //Time difference in milliseconds
                         float energySince = (powerArrayList.get(powerArrayList.size()-1).value + powerArrayList.get(powerArrayList.size()-2).value) / 2 * timeDifference;
-                        totalEnergyUsed += energySince;
-                        totalEnergy.setText(String.format( "%.2f", totalEnergyUsed )+ "Wh");
+                        totalEnergyUsed += energySince / 3600000;
+                        System.out.println(timeDifference);
+                        totalEnergy.setText(String.format( "%.3f", totalEnergyUsed )+ "Wh");
                     }
                 } else if (myUnit.equals("A")){
                     currentArrayList.add(myData);
