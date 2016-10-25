@@ -108,8 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                dataDisplay.setText("Data Cleared Remotely");//When data is cleared remotely
+                dataDisplay.setText("Data Cleared Remotely!");//When data is cleared remotely
                 totalEnergyUsed = (float)0.0;
+                powerArrayList.clear();
+                currentArrayList.clear();
+                voltageArrayList.clear();
+                powerTimeStampList.clear();
             }
 
             @Override
