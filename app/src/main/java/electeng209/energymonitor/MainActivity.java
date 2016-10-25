@@ -20,11 +20,13 @@ import android.content.Intent;
 
 import pl.pawelkleczkowski.customgauge.CustomGauge;
 //ToDo Add comments to all code files of the app
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<MyData> powerArrayList = new ArrayList<>();
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
+    ArrayList<Long> powerTimeStampList = new ArrayList<>();
     private CustomGauge gauge1;
 
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView currentPower = (TextView) findViewById(R.id.powerDisplayed);
         final TextView currentVoltage = (TextView) findViewById(R.id.voltageDisp);
         final TextView currentCurrent = (TextView) findViewById(R.id.currentDisp);
+        final TextView totalEnergy = (TextView) findViewById(R.id.totalPowerDisplayed);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("data");
         myRef.addChildEventListener(new ChildEventListener() {
@@ -73,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     gauge1.setValue((int)(myValue*100));
                     currentVoltage.setText(voltageArrayList.get(voltageArrayList.size() -1).value + "V");
                 }
+                powerTimeStampList.add(System.currentTimeMillis() / 1000);
+                totalEnergy.setText("My time " + powerTimeStampList.get(powerTimeStampList.size()-1) + " " + powerTimeStampList.size());
                 //System.out.println(powerArrayList.size());
             }
 
