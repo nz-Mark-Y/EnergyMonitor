@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MyData> voltageArrayList = new ArrayList<>();
     ArrayList<MyData> currentArrayList = new ArrayList<>();
     ArrayList<Long> powerTimeStampList = new ArrayList<>();
+    float totalEnergyUsed = (float)0.0;
     private CustomGauge gauge1;
 
 
@@ -60,6 +61,21 @@ public class MainActivity extends AppCompatActivity {
                 int myNumber = Integer.parseInt(dataArray[0].substring(16));
                 String myUnit = dataArray[1].substring(dataArray[0].lastIndexOf(":"),dataArray[0].lastIndexOf(":")+1);
                 float myValue = Float.parseFloat(dataArray[2].substring(dataArray[2].lastIndexOf(":")+2,dataArray[2].lastIndexOf("}")));
+
+                if (myUnit.equals("W")) {
+                    if (myValue > 9){
+                        myValue = 9;
+                    }
+                } else if (myUnit.equals("A")){
+                    if (myValue > 1){
+                        myValue = 1;
+                    }
+                } else if (myUnit.equals("V")){
+                    if (myValue > 14.5){
+                        myValue = (float)14.5;
+                    }
+                }
+
                 MyData myData = new MyData(myNumber, myValue, myUnit);
                 if (myUnit.equals("W")) {
                     powerArrayList.add(myData);
@@ -69,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
                     powerTimeStampList.add(System.currentTimeMillis() / 1000);
                     if(powerTimeStampList.size() > 1) {
-                        long difference = powerTimeStampList.get(powerTimeStampList.size() - 1) - powerTimeStampList.get(powerTimeStampList.size() - 2);
-                        totalEnergy.setText("My time " + difference); //powerTimeStampList.get(powerTimeStampList.size()-1)
+                        float timeDifference = ((powerTimeStampList.get(powerTimeStampList.size() - 1)) - (powerTimeStampList.get(powerTimeStampList.size() - 2)))/360;
+                        float energySince = (powerArrayList.get(powerArrayList.size()-1).value + powerArrayList.get(powerArrayList.size()-2).value) / 2 * timeDifference;
+                        totalEnergyUsed += energySince;
+                        totalEnergy.setText(String.format( "%.2f", totalEnergyUsed )+ "Wh");
                     }
                 } else if (myUnit.equals("A")){
                     currentArrayList.add(myData);
