@@ -78,30 +78,27 @@ public class MainActivity extends AppCompatActivity {
                 if (myUnit.equals("W")) {//Storage of read data
                     powerArrayList.add(myData);
                     gauge1 = (CustomGauge) findViewById(R.id.gauge1);
-                    gauge1.setValue((int)(myValue*100));
-                    currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");
+                    gauge1.setValue((int)(myValue*100));//Set the gauge value
+                    currentPower.setText(powerArrayList.get(powerArrayList.size() -1).value + "W");//Change text
 
                     powerTimeStampList.add(System.currentTimeMillis());//Time stamping when the value was received
                     if(powerTimeStampList.size() > 1) {
                         float timeDifference = ((powerTimeStampList.get(powerTimeStampList.size() - 1)) - (powerTimeStampList.get(powerTimeStampList.size() - 2))); //Time difference in milliseconds
-                        float energySince = (powerArrayList.get(powerArrayList.size()-1).value + powerArrayList.get(powerArrayList.size()-2).value) / 2 * timeDifference;
-                        totalEnergyUsed += energySince / 3600000;
-                        System.out.println(timeDifference);
-                        totalEnergy.setText(String.format( "%.3f", totalEnergyUsed )+ "Wh");
+                        float energySince = (powerArrayList.get(powerArrayList.size()-1).value + powerArrayList.get(powerArrayList.size()-2).value) / 2 * timeDifference; //power difference times time
+                        totalEnergyUsed += energySince / 3600000; //conversion to Wh from Wms
+                        totalEnergy.setText(String.format( "%.3f", totalEnergyUsed )+ "Wh");//Display it to 3 dp
                     }
-                } else if (myUnit.equals("A")){
+                } else if (myUnit.equals("A")){//Storage of current
                     currentArrayList.add(myData);
                     gauge1 = (CustomGauge) findViewById(R.id.gauge);
-                    gauge1.setValue((int)(myValue*1000));
-                    currentCurrent.setText(currentArrayList.get(currentArrayList.size() -1).value + "A");
+                    gauge1.setValue((int)(myValue*1000));//Set the gauge value
+                    currentCurrent.setText(currentArrayList.get(currentArrayList.size() -1).value + "A");//Change text
                 } else {
                     voltageArrayList.add(myData);
                     gauge1 = (CustomGauge) findViewById(R.id.gauge2);
-                    gauge1.setValue((int)(myValue*100));
-                    currentVoltage.setText(voltageArrayList.get(voltageArrayList.size() -1).value + "V");
+                    gauge1.setValue((int)(myValue*100));//Set the gauge value
+                    currentVoltage.setText(voltageArrayList.get(voltageArrayList.size() -1).value + "V");//Change the text
                 }
-
-                //System.out.println(powerArrayList.size());
             }
 
             @Override
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                dataDisplay.setText("Data Cleared Remotely");
+                dataDisplay.setText("Data Cleared Remotely");//When data is cleared remotely
             }
 
             @Override
@@ -124,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button graphsButton = (Button) findViewById(R.id.graphButton);
+        Button graphsButton = (Button) findViewById(R.id.graphButton);//Button functionality change tabs
         graphsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void goToGraphs() {
-        Intent intent = new Intent(this, Graphs.class);
+        Intent intent = new Intent(this, Graphs.class);//Switch to graphs tab
         startActivity(intent);
     }
 
     private void goToSettings() {
-        Intent intent = new Intent(this, About.class);
+        Intent intent = new Intent(this, About.class);//Switch to about tab
         startActivity(intent);
     }
 }

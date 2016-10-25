@@ -4,7 +4,7 @@
     <string name="RealPower">Real Time Power Usage:</string>
     <string name="powerDisplayed">0.00W</string>
     <string name="totalPower">Total Power Consumed Today:</string>
-    <string name="totalPowerDisplayed">0.00Wh</string>
+    <string name="totalPowerDisplayed">0.000Wh</string>
     <string name="graphs">Graphs</string>
     <string name="about">About Us</string>
     <string name="real_time">Real Time</string>
